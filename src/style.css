@@ -1,63 +1,149 @@
 body {
     font-family: Arial, sans-serif;
-    background: #f4f6f9;
+    background: #eef2f7;
     margin: 0;
-    padding: 0;
+    color: #1f2937;
   }
   
   .app-header {
-    background: #2563eb;
+    background: linear-gradient(135deg, #2563eb, #1e40af);
     color: white;
     text-align: center;
-    padding: 20px;
+    padding: 35px 20px;
+  }
+  
+  .app-header h1 {
+    margin: 0;
+    font-size: 36px;
+  }
+  
+  .app-header p {
+    margin-top: 10px;
+    font-size: 18px;
   }
   
   .container {
-    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+    padding: 25px;
   }
   
   .dashboard {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
   }
   
   .summary-card {
     background: white;
-    padding: 15px;
-    border-radius: 10px;
-    flex: 1;
+    padding: 20px;
+    border-radius: 14px;
     text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  
+  .summary-card h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #64748b;
+  }
+  
+  .summary-card p {
+    margin: 10px 0 0;
+    font-size: 30px;
+    font-weight: bold;
+    color: #2563eb;
   }
   
   .controls {
-    margin-bottom: 20px;
+    background: white;
+    padding: 18px;
+    border-radius: 14px;
+    margin-bottom: 25px;
+    display: flex;
+    gap: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   }
   
   .controls input,
   .controls select {
-    padding: 10px;
-    margin-right: 10px;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 15px;
+  }
+  
+  .controls input {
+    flex: 1;
   }
   
   .jobs-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
   }
   
   .job-card {
     background: white;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 22px;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .job-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+  }
+  
+  .job-card h2 {
+    margin-top: 0;
+    color: #1e40af;
+  }
+  
+  .job-card h4 {
+    color: #64748b;
+    margin-top: -8px;
+  }
+  
+  .job-card select {
+    margin-top: 8px;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
   }
   
   .job-card button {
     background: #2563eb;
     color: white;
     border: none;
-    padding: 10px;
-    border-radius: 6px;
+    padding: 11px 16px;
+    border-radius: 8px;
     cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .job-card button:hover {
+    background: #1e40af;
+  }
+  
+  @media (max-width: 768px) {
+    .dashboard {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .controls {
+      flex-direction: column;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .dashboard {
+      grid-template-columns: 1fr;
+    }
+  
+    .app-header h1 {
+      font-size: 28px;
+    }
   }
