@@ -12,6 +12,10 @@ function getSavedJobs() {
   return JSON.parse(localStorage.getItem("savedJobs")) || [];
 }
 
+function getJobStatuses() {
+  return JSON.parse(localStorage.getItem("jobStatuses")) || {};
+}
+
 function saveJob(jobId) {
   const savedJobs = getSavedJobs();
 
@@ -24,13 +28,25 @@ function saveJob(jobId) {
   filterJobs();
 }
 
+function updateStatus(jobId, status) {
+  const statuses = getJobStatuses();
+
+  statuses[jobId] = status;
+
+  localStorage.setItem("jobStatuses", JSON.stringify(statuses));
+
+  updateDashboard();
+}
+
 function renderJobs(filteredJobs = jobs) {
   const savedJobs = getSavedJobs();
+  const statuses = getJobStatuses();
 
   jobsContainer.innerHTML = "";
 
   filteredJobs.forEach(job => {
     const isSaved = savedJobs.includes(job.id);
+    const currentStatus = statuses[job.id] || "Not Applied";
 
     const jobCard = document.createElement("div");
     jobCard.classList.add("job-card");
@@ -44,6 +60,16 @@ function renderJobs(filteredJobs = jobs) {
       <p><strong>Type:</strong> ${job.type}</p>
 
       <p>${job.description}</p>
+
+      <label><strong>Status:</strong></label>
+      <select onchange="updateStatus(${job.id}, this.value)">
+        <option value="Not Applied" ${currentStatus === "Not Applied" ? "selected" : ""}>Not Applied</option>
+        <option value="Applied" ${currentStatus === "Applied" ? "selected" : ""}>Applied</option>
+        <option value="Interview" ${currentStatus === "Interview" ? "selected" : ""}>Interview</option>
+        <option value="Rejected" ${currentStatus === "Rejected" ? "selected" : ""}>Rejected</option>
+      </select>
+
+      <br><br>
 
       <button onclick="saveJob(${job.id})">
         ${isSaved ? "Saved" : "Save Job"}
@@ -81,10 +107,24 @@ function filterJobs() {
 
 function updateDashboard() {
   const savedJobs = getSavedJobs();
+  const statuses = getJobStatuses();
+
+  let appliedCount = 0;
+  let interviewCount = 0;
+
+  Object.values(statuses).forEach(status => {
+    if (status === "Applied") {
+      appliedCount++;
+    }
+
+    if (status === "Interview") {
+      interviewCount++;
+    }
+  });
 
   savedJobsElement.textContent = savedJobs.length;
-  appliedJobsElement.textContent = 0;
-  interviewJobsElement.textContent = 0;
+  appliedJobsElement.textContent = appliedCount;
+  interviewJobsElement.textContent = interviewCount;
 }
 
 searchInput.addEventListener("input", filterJobs);
