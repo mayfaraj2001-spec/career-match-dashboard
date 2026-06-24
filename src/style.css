@@ -1,77 +1,136 @@
-body {
-    font-family: Arial, sans-serif;
-    background: #eef2f7;
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
     margin: 0;
-    color: #1f2937;
+    min-height: 100vh;
+    color: #172033;
+    background:
+      radial-gradient(circle at top left, #dbeafe 0, transparent 32%),
+      radial-gradient(circle at top right, #fce7f3 0, transparent 28%),
+      linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
   }
   
   .app-header {
-    background: linear-gradient(135deg, #2563eb, #1e40af);
+    position: relative;
+    overflow: hidden;
     color: white;
+    padding: 55px 24px 70px;
     text-align: center;
-    padding: 35px 20px;
+    background: linear-gradient(135deg, #111827, #2563eb, #7c3aed);
+  }
+  
+  .app-header::before {
+    content: "";
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.14);
+    top: -170px;
+    right: -90px;
+  }
+  
+  .app-header::after {
+    content: "";
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.10);
+    bottom: -130px;
+    left: -80px;
+  }
+  
+  .app-header h1,
+  .app-header p {
+    position: relative;
+    z-index: 1;
   }
   
   .app-header h1 {
     margin: 0;
-    font-size: 36px;
+    font-size: 46px;
+    letter-spacing: -1px;
   }
   
   .app-header p {
-    margin-top: 10px;
-    font-size: 18px;
+    margin: 14px auto 0;
+    max-width: 650px;
+    font-size: 19px;
+    opacity: 0.92;
   }
   
   .container {
     max-width: 1200px;
-    margin: auto;
-    padding: 25px;
+    margin: -35px auto 0;
+    padding: 0 24px 40px;
+    position: relative;
+    z-index: 2;
   }
   
   .dashboard {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 18px;
-    margin-bottom: 25px;
+    margin-bottom: 22px;
   }
   
   .summary-card {
-    background: white;
-    padding: 20px;
-    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(12px);
+    padding: 22px;
+    border-radius: 22px;
     text-align: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border: 1px solid rgba(255,255,255,0.7);
+    box-shadow: 0 14px 35px rgba(15, 23, 42, 0.12);
   }
   
   .summary-card h3 {
     margin: 0;
-    font-size: 16px;
+    font-size: 14px;
     color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
   }
   
   .summary-card p {
-    margin: 10px 0 0;
-    font-size: 30px;
-    font-weight: bold;
-    color: #2563eb;
+    margin: 12px 0 0;
+    font-size: 34px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   
   .controls {
-    background: white;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(14px);
     padding: 18px;
-    border-radius: 14px;
-    margin-bottom: 25px;
+    border-radius: 22px;
+    margin-bottom: 28px;
     display: flex;
     gap: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    box-shadow: 0 14px 35px rgba(15, 23, 42, 0.10);
   }
   
   .controls input,
   .controls select {
-    padding: 12px;
+    padding: 14px 15px;
     border: 1px solid #cbd5e1;
-    border-radius: 8px;
+    border-radius: 14px;
     font-size: 15px;
+    outline: none;
+    background: #f8fafc;
+  }
+  
+  .controls input:focus,
+  .controls select:focus {
+    border-color: #7c3aed;
+    box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.12);
   }
   
   .controls input {
@@ -80,55 +139,89 @@ body {
   
   .jobs-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    gap: 22px;
   }
   
   .job-card {
-    background: white;
-    padding: 22px;
-    border-radius: 14px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    background: rgba(255,255,255,0.94);
+    padding: 24px;
+    border-radius: 24px;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    box-shadow: 0 14px 35px rgba(15, 23, 42, 0.10);
+    transition: 0.25s ease;
+  }
+  
+  .job-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 7px;
+    background: linear-gradient(90deg, #2563eb, #7c3aed, #ec4899);
   }
   
   .job-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+    transform: translateY(-7px);
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.16);
   }
   
   .job-card h2 {
-    margin-top: 0;
-    color: #1e40af;
+    margin: 8px 0 6px;
+    font-size: 23px;
+    color: #111827;
   }
   
   .job-card h4 {
-    color: #64748b;
-    margin-top: -8px;
+    margin: 0 0 18px;
+    color: #2563eb;
+    font-size: 16px;
+  }
+  
+  .job-card p {
+    line-height: 1.55;
+    color: #475569;
+  }
+  
+  .job-card strong {
+    color: #172033;
+  }
+  
+  .job-card label {
+    display: inline-block;
+    margin-top: 8px;
+    color: #172033;
   }
   
   .job-card select {
     margin-top: 8px;
-    padding: 8px;
-    border-radius: 8px;
+    width: 100%;
+    padding: 11px;
+    border-radius: 13px;
     border: 1px solid #cbd5e1;
+    background: #f8fafc;
   }
   
   .job-card button {
-    background: #2563eb;
+    width: 100%;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
     color: white;
     border: none;
-    padding: 11px 16px;
-    border-radius: 8px;
+    padding: 13px 18px;
+    border-radius: 14px;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 700;
+    font-size: 15px;
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.25);
   }
   
   .job-card button:hover {
-    background: #1e40af;
+    transform: translateY(-1px);
+    box-shadow: 0 14px 24px rgba(37, 99, 235, 0.32);
   }
   
-  @media (max-width: 768px) {
+  @media (max-width: 850px) {
     .dashboard {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -136,14 +229,30 @@ body {
     .controls {
       flex-direction: column;
     }
+  
+    .app-header h1 {
+      font-size: 36px;
+    }
+  
+    .container {
+      margin-top: -25px;
+    }
   }
   
-  @media (max-width: 480px) {
+  @media (max-width: 520px) {
     .dashboard {
       grid-template-columns: 1fr;
     }
   
+    .jobs-container {
+      grid-template-columns: 1fr;
+    }
+  
+    .app-header {
+      padding: 42px 18px 58px;
+    }
+  
     .app-header h1 {
-      font-size: 28px;
+      font-size: 30px;
     }
   }
