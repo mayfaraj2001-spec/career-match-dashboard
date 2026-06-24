@@ -1,10 +1,14 @@
 const jobsContainer = document.getElementById("jobsContainer");
 const totalJobsElement = document.getElementById("totalJobs");
 
-function renderJobs() {
+const searchInput = document.getElementById("searchInput");
+const categoryFilter = document.getElementById("categoryFilter");
+const typeFilter = document.getElementById("typeFilter");
+
+function renderJobs(filteredJobs = jobs) {
   jobsContainer.innerHTML = "";
 
-  jobs.forEach(job => {
+  filteredJobs.forEach(job => {
     const jobCard = document.createElement("div");
 
     jobCard.classList.add("job-card");
@@ -25,7 +29,35 @@ function renderJobs() {
     jobsContainer.appendChild(jobCard);
   });
 
-  totalJobsElement.textContent = jobs.length;
+  totalJobsElement.textContent = filteredJobs.length;
 }
+
+function filterJobs() {
+  const searchText = searchInput.value.toLowerCase();
+  const selectedCategory = categoryFilter.value;
+  const selectedType = typeFilter.value;
+
+  const filteredJobs = jobs.filter(job => {
+    const matchesSearch =
+      job.title.toLowerCase().includes(searchText) ||
+      job.company.toLowerCase().includes(searchText);
+
+    const matchesCategory =
+      selectedCategory === "all" ||
+      job.category === selectedCategory;
+
+    const matchesType =
+      selectedType === "all" ||
+      job.type === selectedType;
+
+    return matchesSearch && matchesCategory && matchesType;
+  });
+
+  renderJobs(filteredJobs);
+}
+
+searchInput.addEventListener("input", filterJobs);
+categoryFilter.addEventListener("change", filterJobs);
+typeFilter.addEventListener("change", filterJobs);
 
 renderJobs();
