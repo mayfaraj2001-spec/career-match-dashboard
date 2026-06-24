@@ -1,0 +1,63 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .app-header {
+    background: #2563eb;
+    color: white;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .container {
+    padding: 20px;
+  }
+  
+  .dashboard {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .summary-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    flex: 1;
+    text-align: center;
+  }
+  
+  .controls {
+    margin-bottom: 20px;
+  }
+  
+  .controls input,
+  .controls select {
+    padding: 10px;
+    margin-right: 10px;
+  }
+  
+  .jobs-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
+  }
+  
+  .job-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .job-card button {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
