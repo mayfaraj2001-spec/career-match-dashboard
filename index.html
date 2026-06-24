@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CareerMatch Dashboard</title>
+  <link rel="stylesheet" href="src/style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>CareerMatch Dashboard</h1>
+    <p>Find, save and track your next tech job.</p>
+  </header>
+
+  <main class="container">
+    <section class="dashboard">
+      <div class="summary-card">
+        <h3>Total Jobs</h3>
+        <p id="totalJobs">0</p>
+      </div>
+      <div class="summary-card">
+        <h3>Saved Jobs</h3>
+        <p id="savedJobs">0</p>
+      </div>
+      <div class="summary-card">
+        <h3>Applied</h3>
+        <p id="appliedJobs">0</p>
+      </div>
+      <div class="summary-card">
+        <h3>Interviews</h3>
+        <p id="interviewJobs">0</p>
+      </div>
+    </section>
+
+    <section class="controls">
+      <input 
+        type="text" 
+        id="searchInput" 
+        placeholder="Search by job title or company..." 
+      />
+
+      <select id="categoryFilter">
+        <option value="all">All Categories</option>
+        <option value="Cyber">Cyber</option>
+        <option value="Data">Data</option>
+        <option value="Project Management">Project Management</option>
+        <option value="Development">Development</option>
+      </select>
+
+      <select id="typeFilter">
+        <option value="all">All Types</option>
+        <option value="Full Time">Full Time</option>
+        <option value="Part Time">Part Time</option>
+        <option value="Hybrid">Hybrid</option>
+        <option value="Remote">Remote</option>
+      </select>
+    </section>
+
+    <section id="jobsContainer" class="jobs-container">
+      <!-- Job cards will be rendered here -->
+    </section>
+  </main>
+
+  <script src="src/jobs.js"></script>
+  <script src="src/main.js"></script>
+</body>
+</html>
