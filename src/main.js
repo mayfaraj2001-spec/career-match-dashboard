@@ -7,22 +7,36 @@ const interviewJobsElement = document.getElementById("interviewJobs");
 const searchInput = document.getElementById("searchInput");
 const categoryFilter = document.getElementById("categoryFilter");
 const typeFilter = document.getElementById("typeFilter");
+const sortSelect = document.getElementById("sortSelect");
+const clearFiltersButton = document.getElementById("clearFiltersButton");
+const resultsMessage = document.getElementById("resultsMessage");
 
 function getSavedJobs() {
-  return JSON.parse(localStorage.getItem("savedJobs")) || [];
+  try {
+    return JSON.parse(localStorage.getItem("savedJobs")) || [];
+  } catch (error) {
+    console.error("Could not load saved jobs:", error);
+    return [];
+  }
 }
 
 function getJobStatuses() {
-  return JSON.parse(localStorage.getItem("jobStatuses")) || {};
+  try {
+    return JSON.parse(localStorage.getItem("jobStatuses")) || {};
+  } catch (error) {
+    console.error("Could not load job statuses:", error);
+    return {};
+  }
 }
 
-function saveJob(jobId) {
+function toggleSavedJob(jobId) {
   const savedJobs = getSavedJobs();
 
-  if (!savedJobs.includes(jobId)) {
-    savedJobs.push(jobId);
-    localStorage.setItem("savedJobs", JSON.stringify(savedJobs));
-  }
+  const updatedSavedJobs = savedJobs.includes(jobId)
+    ? savedJobs.filter(id => id !== jobId)
+    : [...savedJobs, jobId];
+
+  localStorage.setItem("savedJobs", JSON.stringify(updatedSavedJobs));
 
   updateDashboard();
   filterJobs();
@@ -44,6 +58,23 @@ function renderJobs(filteredJobs = jobs) {
 
   jobsContainer.innerHTML = "";
 
+  if (filteredJobs.length === 0) {
+    jobsContainer.innerHTML = `
+      <div class="empty-state">
+        <h2>No jobs found</h2>
+        <p>Try changing the search text or clearing the filters.</p>
+      </div>
+    `;
+
+    totalJobsElement.textContent = 0;
+
+    if (resultsMessage) {
+      resultsMessage.textContent = "0 jobs displayed";
+    }
+
+    return;
+  }
+
   filteredJobs.forEach(job => {
     const isSaved = savedJobs.includes(job.id);
     const currentStatus = statuses[job.id] || "Not Applied";
@@ -61,18 +92,40 @@ function renderJobs(filteredJobs = jobs) {
 
       <p>${job.description}</p>
 
-      <label><strong>Status:</strong></label>
-      <select onchange="updateStatus(${job.id}, this.value)">
-        <option value="Not Applied" ${currentStatus === "Not Applied" ? "selected" : ""}>Not Applied</option>
-        <option value="Applied" ${currentStatus === "Applied" ? "selected" : ""}>Applied</option>
-        <option value="Interview" ${currentStatus === "Interview" ? "selected" : ""}>Interview</option>
-        <option value="Rejected" ${currentStatus === "Rejected" ? "selected" : ""}>Rejected</option>
+      <label for="status-${job.id}">
+        <strong>Status:</strong>
+      </label>
+
+      <select
+        id="status-${job.id}"
+        class="status-select"
+        data-job-id="${job.id}"
+      >
+        <option value="Not Applied" ${currentStatus === "Not Applied" ? "selected" : ""}>
+          Not Applied
+        </option>
+        <option value="Applied" ${currentStatus === "Applied" ? "selected" : ""}>
+          Applied
+        </option>
+        <option value="Interview" ${currentStatus === "Interview" ? "selected" : ""}>
+          Interview
+        </option>
+        <option value="Rejected" ${currentStatus === "Rejected" ? "selected" : ""}>
+          Rejected
+        </option>
+        <option value="Offer" ${currentStatus === "Offer" ? "selected" : ""}>
+          Offer
+        </option>
       </select>
 
       <br><br>
 
-      <button onclick="saveJob(${job.id})">
-        ${isSaved ? "Saved" : "Save Job"}
+      <button
+        type="button"
+        class="save-job-button ${isSaved ? "saved" : ""}"
+        data-job-id="${job.id}"
+      >
+        ${isSaved ? "Remove Saved Job" : "Save Job"}
       </button>
     `;
 
@@ -80,12 +133,18 @@ function renderJobs(filteredJobs = jobs) {
   });
 
   totalJobsElement.textContent = filteredJobs.length;
+
+  if (resultsMessage) {
+    resultsMessage.textContent =
+      `${filteredJobs.length} ${filteredJobs.length === 1 ? "job" : "jobs"} displayed`;
+  }
 }
 
 function filterJobs() {
-  const searchText = searchInput.value.toLowerCase();
+  const searchText = searchInput.value.trim().toLowerCase();
   const selectedCategory = categoryFilter.value;
   const selectedType = typeFilter.value;
+  const selectedSort = sortSelect ? sortSelect.value : "default";
 
   const filteredJobs = jobs.filter(job => {
     const matchesSearch =
@@ -102,7 +161,31 @@ function filterJobs() {
     return matchesSearch && matchesCategory && matchesType;
   });
 
+  if (selectedSort === "company") {
+    filteredJobs.sort((a, b) =>
+      a.company.localeCompare(b.company)
+    );
+  }
+
+  if (selectedSort === "title") {
+    filteredJobs.sort((a, b) =>
+      a.title.localeCompare(b.title)
+    );
+  }
+
   renderJobs(filteredJobs);
+}
+
+function clearFilters() {
+  searchInput.value = "";
+  categoryFilter.value = "all";
+  typeFilter.value = "all";
+
+  if (sortSelect) {
+    sortSelect.value = "default";
+  }
+
+  filterJobs();
 }
 
 function updateDashboard() {
@@ -131,5 +214,33 @@ searchInput.addEventListener("input", filterJobs);
 categoryFilter.addEventListener("change", filterJobs);
 typeFilter.addEventListener("change", filterJobs);
 
+if (sortSelect) {
+  sortSelect.addEventListener("change", filterJobs);
+}
+
+if (clearFiltersButton) {
+  clearFiltersButton.addEventListener("click", clearFilters);
+}
+
+jobsContainer.addEventListener("click", event => {
+  const saveButton = event.target.closest(".save-job-button");
+
+  if (!saveButton) {
+    return;
+  }
+
+  const jobId = Number(saveButton.dataset.jobId);
+  toggleSavedJob(jobId);
+});
+
+jobsContainer.addEventListener("change", event => {
+  if (!event.target.matches(".status-select")) {
+    return;
+  }
+
+  const jobId = Number(event.target.dataset.jobId);
+  updateStatus(jobId, event.target.value);
+});
+
 updateDashboard();
-renderJobs();
+filterJobs();
