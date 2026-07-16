@@ -2,68 +2,168 @@
 
 ## Project Overview
 
-CareerMatch Dashboard is a web application designed for job seekers in the technology industry.
+CareerMatch Dashboard is a web application that helps technology job seekers organize and track their job search.
 
-The application allows users to browse available jobs, search and filter opportunities, save favorite positions, and track their application status.
+Users can browse available jobs, search and filter opportunities, save favorite positions, and manage their application status through an interactive dashboard.
+
+The project demonstrates the use of HTML, CSS, JavaScript, LocalStorage, Git, and GitHub as part of the development process.
+
+---
 
 ## Features
 
-* Dynamic job listing display
-* Search jobs by title or company
-* Filter jobs by category and job type
-* Save favorite jobs
-* Track application status
-* Dashboard summary statistics
-* Responsive modern UI
-* LocalStorage persistence
+- Display technology job listings
+- Search jobs by title, company, or description
+- Filter jobs by category
+- Filter jobs by work type
+- Sort jobs by company or job title
+- Save and remove favorite jobs
+- Track application status
+- Dashboard summary statistics
+- Responsive modern interface
+- LocalStorage persistence
+- Empty-state message when no jobs match the search
+- Clear Filters button
+
+---
 
 ## Technologies Used
 
-* HTML5
-* CSS3
-* JavaScript (Vanilla JS)
-* LocalStorage
+- HTML5
+- CSS3
+- Vanilla JavaScript
+- LocalStorage
+- Git
+- GitHub
+- GitHub Pages
 
-## Data Source
+---
 
-The application uses a local JavaScript data source located in:
+## Project Structure
 
-```txt
-src/jobs.js
+```
+career-match-dashboard/
+│
+├── index.html
+├── README.md
+├── PRD.md
+├── tasks.md
+│
+└── src/
+    ├── jobs.js
+    ├── main.js
+    └── style.css
 ```
 
-The file contains sample technology-related jobs used for demonstration purposes.
+---
 
 ## How to Run
 
-1. Clone the repository:
+### Option 1
 
-```bash
-git clone <repository-url>
+Open the project folder.
+
+Double-click **index.html**.
+
+---
+
+### Option 2 (Recommended)
+
+Open the project with Visual Studio Code.
+
+Use **Live Server**.
+
+Open:
+
+```
+http://localhost:5500
 ```
 
-2. Open the project folder.
+---
 
-3. Open `index.html` in your browser.
+## Data Source
 
-Alternatively, run the project using VS Code Live Server.
+The application currently uses local sample data stored in:
 
-## Project Documents
+```
+src/jobs.js
+```
 
-* PRD.md
-* tasks.md
+Each job contains:
+
+- Job title
+- Company
+- Location
+- Category
+- Work type
+- Description
+
+The application stores user data using **LocalStorage**, including:
+
+- Saved jobs
+- Application statuses
+
+---
+
+## Main Functionalities
+
+The system allows users to:
+
+- Browse job opportunities
+- Search jobs
+- Filter by category
+- Filter by work type
+- Sort jobs
+- Save favorite jobs
+- Remove saved jobs
+- Update application status
+- Track progress through dashboard statistics
+
+---
 
 ## Known Limitations
 
-* No real authentication system
-* No backend database
-* No external API integration
-* Job data is static
+Current version does not include:
+
+- User accounts
+- Backend database
+- Real job API
+- LinkedIn integration
+- Resume upload
+- Cloud synchronization
+
+These features can be added in future versions.
+
+---
+
+## Related Documents
+
+- PRD.md – Product Requirements Document
+- tasks.md – Development task list
+
+---
 
 ## Future Improvements
 
-* LinkedIn integration
-* Real job APIs
-* User accounts
-* Resume management
-* Application analytics
+Possible future improvements include:
+
+- Integration with a real Job API
+- User authentication
+- Cloud database
+- Saved Jobs page
+- Dark / Light mode
+- Personal notes
+- Analytics dashboard
+- Resume upload
+- Email notifications
+- AI-based job recommendations
+
+---
+
+## Author
+
+Final Academic Project
+
+CareerMatch Dashboard
+
+2026
